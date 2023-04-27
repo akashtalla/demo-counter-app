@@ -41,7 +41,8 @@ pipeline{
 	
     stage("Create Docker Image"){
 	  steps{
-	    bat "docker build -t akashtalla/demo-counter-app:${BUILD_NUMBER} ."
+	    bat "docker build -t akashtalla/demo-counter-app:v1.${BUILD_ID} ."
+	    bat "docker build -t akashtalla/demo-counter-app:latest ."
 	  }
 	}
 	
