@@ -11,7 +11,8 @@ pipeline{
 	
     stage("Maven Unit Testing"){
 	  steps{
-	    sh "mvn test"
+	    sh returnStdout: true, script: 'ls -lrt C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.tasks.Maven_MavenInstallation\\Maven-3.9.1'
+            sh "mvn test"
 	  }
 	}
 	
