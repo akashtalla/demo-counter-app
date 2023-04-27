@@ -5,6 +5,7 @@ pipeline{
 	    mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
 		jdkHome = tool name: 'jdk-17', type: 'jdk'
 		mvnCMD = "${mvnHome}/bin/mvn"
+		dockerTag = getDockerTag()
   }
   
   tools{
@@ -63,14 +64,16 @@ pipeline{
 	
     stage("Deploy to K8s"){
 	  steps{
+	       sh "chmod +x changeTag.sh"
+		   sh "./changeTag.sh ${dockerTag}"
 		   sshagent(['mycred']) {
-               sh 'scp -o StrictHostKeyChecking=no Deployment.yml service.yml "rakesh d g"@172.24.192.1'
+               sh 'scp -o StrictHostKeyChecking=no Deployment.yml service.yml LAPTOP-9VOD4K4E@172.24.192.1'
 			   script{
 			     try{
-				   sh 'ssh "rakesh d g"@172.24.192.1 kubectl apply -f .'
+				   sh 'ssh LAPTOP-9VOD4K4E@172.24.192.1 kubectl apply -f .'
 				 }
 				 catch(error){
-				   sh 'ssh "rakesh d g"@172.24.192.1 kubectl create -f .'
+				   sh 'ssh "LAPTOP-9VOD4K4E@172.24.192.1 kubectl create -f .'
 				 }
 			   }
            }
@@ -80,3 +83,7 @@ pipeline{
   
 }
 
+def getDockerTag(){
+  def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+  return tag
+}
