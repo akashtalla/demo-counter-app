@@ -2,9 +2,9 @@ pipeline{
   agent any
   
   environment{
-	    mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
-		jdkHome = tool name: 'JDK-11', type: 'jdk'
-		mvnCMD = "C:\ProgramData\Jenkins\.jenkins\tools\hudson.tasks.Maven_MavenInstallation\Maven-3.9.1\bin\mvn"
+	mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
+	jdkHome = tool name: 'JDK-11', type: 'jdk'
+	mvnCMD = "C:/ProgramData/Jenkins/.jenkins/tools/hudson.tasks.Maven_MavenInstallation/Maven-3.9.1/bin/mvn"
   }
   
   stages{
@@ -17,7 +17,7 @@ pipeline{
 	
     stage("Maven Unit Testing"){
 	  steps{
-	    sh returnStdout: true, script: 'ls -lrt C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.tasks.Maven_MavenInstallation\\Maven-3.9.1'
+	    sh returnStdout: true, script: 'ls -lrt C:/ProgramData/Jenkins/.jenkins/tools/hudson.tasks.Maven_MavenInstallation/Maven-3.9.1'
 	    sh "${mvnCMD} test"
 	  }
 	}
