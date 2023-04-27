@@ -2,8 +2,8 @@ pipeline{
   agent any
   
   environment{
-	    def mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
-		def mvnCMD = "${mvnHome}/bin/mvn "
+	//def mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
+	//def mvnCMD = "${mvnHome}/bin/mvn "
   }
   
   stages{
@@ -16,19 +16,19 @@ pipeline{
 	
     stage("Maven Unit Testing"){
 	  steps{
-	    sh "${mvnCMD} test"
+	    sh "mvn test"
 	  }
 	}
 	
     stage("Maven Integration Testing"){
 	  steps{
-	    sh "${mvnCMD} verify -DskipUnitTests"
+	    sh "mvn verify -DskipUnitTests"
 	  }
 	}
 	
     stage("Maven Build & Package"){
 	  steps{
-	    sh "${mvnCMD} clean package"
+	    sh "mvn clean package"
 	  }
 	}
 	
