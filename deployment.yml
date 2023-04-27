@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  labels: 
+    app: springboot-app
+spec:
+  replicas: 2
+  selector:
+    matcheLabels:
+      app: springboot-app
+  template:
+    metadata:
+      name: demo-app
+      labels: 
+        app: springboot-app
+    spec:
+      containers:
+       - name: springboot-app
+         image: akashtalla/demo-counter-app:v1.replaceTag
+         imagePullPolicy: Always
+         ports:
+         - containerPort: 9090

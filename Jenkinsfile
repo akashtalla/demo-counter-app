@@ -4,7 +4,6 @@ pipeline{
   environment{
 	    mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
 		jdkHome = tool name: 'jdk-17', type: 'jdk'
-		mvnBin = "C:/ProgramData/Jenkins/.jenkins/tools/hudson.tasks.Maven_MavenInstallation/Maven-3.9.1/bin/mvn"
 		mvnCMD = "${mvnHome}/bin/mvn"
   }
   
@@ -56,6 +55,28 @@ pipeline{
 	  }
 	}
 	
+    stage("Update Deployment File"){
+	  steps{
+		  sh 'sed s/replaceTag/${BUILD_ID}/g deployment.yml > Deplyment.yml'
+	  }
+	}
+	
+    stage("Deploy to K8s"){
+	  steps{
+		   sshagent(['mycred']) {
+               sh 'scp -o StrictHostKeyChecking=no Deployment.yml service.yml "rakesh d g"@172.24.192.1'
+			   script{
+			     try{
+				   sh 'ssh "rakesh d g"@172.24.192.1 kubectl apply -f .'
+				 }
+				 catch(error){
+				   sh 'ssh "rakesh d g"@172.24.192.1 kubectl create -f .'
+				 }
+			   }
+           }
+	  }
+	}	
   }
   
 }
+

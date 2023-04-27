@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app
+  labels: 
+    app: springboot-app
+spec:
+  type: NodePort
+  selector:
+    matcheLabels:
+      app: springboot-app
+   ports:
+   - port: 9090
+     targetPort: 9090
+     nodePort: 31000
