@@ -4,8 +4,13 @@ pipeline{
   environment{
 	    mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
 		jdkHome = tool name: 'jdk-17', type: 'jdk'
-		mvnCMD = "C:/ProgramData/Jenkins/.jenkins/tools/hudson.tasks.Maven_MavenInstallation/Maven-3.9.1/bin/mvn"
-		mvnBin = "${mvnHome}/bin/mvn"
+		mvnBin = "C:/ProgramData/Jenkins/.jenkins/tools/hudson.tasks.Maven_MavenInstallation/Maven-3.9.1/bin/mvn"
+		mvnCMD = "${mvnHome}/bin/mvn"
+  }
+  
+  tools{
+        maven 'Maven-3.9.1'
+	    jdk 'jdk-17'
   }
   
   stages{
@@ -18,26 +23,25 @@ pipeline{
 	
     stage("Maven Unit Testing"){
 	  steps{
-	    sh returnStdout: true, script: 'ls -lrt C://ProgramData//Jenkins//.jenkins//tools//hudson.tasks.Maven_MavenInstallation//Maven-3.9.1'
-	    sh "${mvnBin} test"
+	    bat "${mvnCMD} test"
 	  }
 	}
 	
     stage("Maven Integration Testing"){
 	  steps{
-	    sh "${mvnBin} verify -DskipUnitTests"
+	    bat "${mvnCMD} verify -DskipUnitTests"
 	  }
 	}
 	
     stage("Maven Build & Package"){
 	  steps{
-	    sh "${mvnBin} clean package"
+	    bat "${mvnCMD} clean package"
 	  }
 	}
 	
     stage("Create Docker Image"){
 	  steps{
-	    sh "docker build -t akashtalla/demo-counter-app:${BUILD_NUMBER} ."
+	    bat "docker build -t akashtalla/demo-counter-app:${BUILD_NUMBER} ."
 	  }
 	}
 	
