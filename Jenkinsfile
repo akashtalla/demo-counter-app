@@ -56,12 +56,6 @@ pipeline{
 	  }
 	}
 	
-    stage("Update Deployment File"){
-	  steps{
-		  bat 'sed s/replaceTag/${BUILD_ID}/g deployment.yml > Deplyment.yml'
-	  }
-	}
-	
     stage("Deploy to K8s"){
 	  steps{
 	       bat "chmod +x changeTag.sh"
