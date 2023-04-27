@@ -1,11 +1,6 @@
 pipeline{
   agent any
   
-  environment{
-	//def mvnHome = tool name: 'Maven-3.9.1', type: 'maven'
-	//def mvnCMD = "${mvnHome}/bin/mvn "
-  }
-  
   stages{
   
     stage("Git Checkout"){
