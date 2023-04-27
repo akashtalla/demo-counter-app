@@ -58,14 +58,14 @@ pipeline{
 	
     stage("Update Deployment File"){
 	  steps{
-		  sh 'sed s/replaceTag/${BUILD_ID}/g deployment.yml > Deplyment.yml'
+		  bat 'sed s/replaceTag/${BUILD_ID}/g deployment.yml > Deplyment.yml'
 	  }
 	}
 	
     stage("Deploy to K8s"){
 	  steps{
-	       sh "chmod +x changeTag.sh"
-		   sh "./changeTag.sh ${dockerTag}"
+	       bat "chmod +x changeTag.sh"
+		   bat "./changeTag.sh ${dockerTag}"
 		   sshagent(['mycred']) {
                sh 'scp -o StrictHostKeyChecking=no Deployment.yml service.yml LAPTOP-9VOD4K4E@172.24.192.1'
 			   script{
@@ -84,6 +84,6 @@ pipeline{
 }
 
 def getDockerTag(){
-  def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+  def tag = bat script: 'git rev-parse HEAD', returnStdout: true
   return tag
 }
