@@ -48,8 +48,8 @@ pipeline{
 	
     stage("Docker Image Push"){
 	  steps{
-          withCredentials([string(credentialsId: 'docker-creds', variable: 'docker-creds')]) {
-            bat "docker login -u akashtalla -p ${docker-creds}"
+          withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPass')]) {
+            bat "docker login -u akashtalla -p ${dockerPass}"
           }	    
 	    bat "docker push akashtalla/demo-counter-app:v1.${BUILD_ID}"
 	    bat "docker push akashtalla/demo-counter-app:latest"
