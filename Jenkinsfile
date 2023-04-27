@@ -58,7 +58,6 @@ pipeline{
 	
     stage("Deploy to K8s"){
 	  steps{
-	       bat "chmod +x changeTag.sh"
 		   bat "./changeTag.sh ${dockerTag}"
 		   sshagent(['mycred']) {
                sh 'scp -o StrictHostKeyChecking=no Deployment.yml service.yml LAPTOP-9VOD4K4E@172.24.192.1'
