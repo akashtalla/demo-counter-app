@@ -57,7 +57,7 @@ pipeline{
 	
     stage("Deploy to K8s"){
 	  steps{
-		   sshagent(['mycred']) {
+		   sshagent (credentials: ['mycred']) {
                     sh 'scp -o StrictHostKeyChecking=no deployment.yml service.yml LAPTOP-9VOD4K4E@172.24.192.1'
 			   script{
 			     try{
