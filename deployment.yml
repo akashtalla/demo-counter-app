@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
        - name: springboot-app
-         image: akashtalla/demo-counter-app:v1.replaceTag
+         image: akashtalla/demo-counter-app:v1.latest
          imagePullPolicy: Always
          ports:
          - containerPort: 9090
